@@ -3,3 +3,26 @@ Due: 3/12/2025
 
 Create a list of to-dos or list of steps you believe you will have to
 follow in order to solve this problem or to get started with it
+
+
+
+1) Rename the project and commit and push as initial commit and push
+2) Read the spec
+3) Understand map-based input files!
+3.5a) Create a couple of map-based input files for testing and understanding
+3.5b) Create a couple of coordinate based input files.
+4) Understand coordinate-based input files
+5) Identify classes I should have for this project
+6) Plan out file input
+7) What data structure(s) will be needed? - Plan out any helper methods
+	relevant to the problem.
+8) Figure out the difference between stack based approach vs queue based
+	approach
+9) Understand why the 2 approaches generate different paths
+10) What do the paths look like for the 2 approaches? Are they predictable?
+11)
+12)
+13)
+
+
+Remember this plan can change
