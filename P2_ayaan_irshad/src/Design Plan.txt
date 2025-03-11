@@ -16,13 +16,19 @@ follow in order to solve this problem or to get started with it
 6) Plan out file input
 7) What data structure(s) will be needed? - Plan out any helper methods
 	relevant to the problem.
+	I want to use recursion for the first 2 approaches to check through the possible locations that have not been visited yet
 8) Figure out the difference between stack based approach vs queue based
 	approach
 9) Understand why the 2 approaches generate different paths
 10) What do the paths look like for the 2 approaches? Are they predictable?
-11)
-12)
-13)
+11) Begin programming the stack approach for map based and coordinate inputs
+11a) Make sure I can return both outputs
+12) Begin programming the queue approach for map based and coordinate inputs
+12a) Make sure I can return both outputs
+13) Begin on the optimal path for both inputs
+13a) Make sure I can return both outputs
+14) Calculate runtime
+15) Add cmd line arguments 
 
 
 Remember this plan can change
