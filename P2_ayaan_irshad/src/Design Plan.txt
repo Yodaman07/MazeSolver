@@ -21,6 +21,7 @@ follow in order to solve this problem or to get started with it
 	approach
 9) Understand why the 2 approaches generate different paths
 10) What do the paths look like for the 2 approaches? Are they predictable?
+10.5)How do I format the maze so that it is easily readable
 11) Begin programming the stack approach for map based and coordinate inputs
 11a) Make sure I can return both outputs
 12) Begin programming the queue approach for map based and coordinate inputs
