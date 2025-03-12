@@ -93,16 +93,40 @@ public class Map {
 		for (int r = 0; r < this.rows; r++) {
 			for (int c = 0; c < this.cols; c++) {
 				if (this.maze[r][c] == 'W') {
-					q.enqueue(new Point(r, c)); //technically its y,x instead of x,y but r,c is consistent with everything elese
+					q.enqueue(new Point(r, c)); //technically its y,x instead of x,y but r,c is consistent with everything else
 				}
 			}
 			System.out.println("");
 		}
 		
+//		solverHelper(q, history); // this will invoke the recursive method
+		//For each "path" there will be a unique history list to ensure no backtracking
 		
 	}
 	
-	void solverHelper() {
+	void solverHelper(Queue<Point> q, Queue<Point> history) {
+		int x = q.peek().x;
+		int y = q.peek().y;
+		
+		if (this.maze[x-1][y] == '.') { // north
+			
+			q.enqueue(new Point(x-1, y));
+			q.dequeue();
+			this.solverHelper(q, history);
+			
+		}else if (this.maze[x+1][y] == '.'){ //south
+			q.enqueue(new Point(x+1, y));
+			
+		}else if (this.maze[x][y-1] == '.') {//east
+			q.enqueue(new Point(x, y-1));
+			
+		}else if (this.maze[x][y+1] == '.') {//west
+			q.enqueue(new Point(x, y+1));
+		}else {
+			System.out.println("dead end?");
+		}
+		
+		
 		
 	}
 	
