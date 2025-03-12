@@ -99,7 +99,7 @@ public class Map {
 			System.out.println("");
 		}
 		
-//		solverHelper(q, history); // this will invoke the recursive method
+		solverHelper(q, history); // this will invoke the recursive method
 		//For each "path" there will be a unique history list to ensure no backtracking
 		
 	}
@@ -108,25 +108,67 @@ public class Map {
 		int x = q.peek().x;
 		int y = q.peek().y;
 		
-		if (this.maze[x-1][y] == '.') { // north
-			
-			q.enqueue(new Point(x-1, y));
-			q.dequeue();
-			this.solverHelper(q, history);
-			
-		}else if (this.maze[x+1][y] == '.'){ //south
-			q.enqueue(new Point(x+1, y));
-			
-		}else if (this.maze[x][y-1] == '.') {//east
-			q.enqueue(new Point(x, y-1));
-			
-		}else if (this.maze[x][y+1] == '.') {//west
-			q.enqueue(new Point(x, y+1));
-		}else {
-			System.out.println("dead end?");
+		int[] x_c = {-1, 1, 0, 0}; //the x and y coordinate offsets for the box that needs to be checked
+		int[] y_c = {0, 0, -1, 1}; 
+		
+		
+		for (int i = 0; i < x_c.length; i++) {
+			if (this.maze[x+x_c[i]][y+y_c[i]] == '.') {
+				Point p = new Point(x+x_c[i], y+y_c[i]);
+				if (contains(history, p)) {return;}
+				
+				q.enqueue(p);
+				history.enqueue(p);
+				q.dequeue();
+				this.solverHelper(q, history);
+			}
+
 		}
 		
 		
+//		if (this.maze[x-1][y] == '.') { // north
+//			System.out.println("N");
+//			Point p = new Point(x-1, y);
+//			q.enqueue(p);
+//			history.enqueue(p);
+//			q.dequeue();
+//			this.solverHelper(q, history);
+//			
+//		}else if (this.maze[x+1][y] == '.'){ //south
+//			System.out.println("S");
+//			Point p = new Point(x+1, y);
+//			q.enqueue(p);
+//			history.enqueue(p);
+//			q.dequeue();
+//			this.solverHelper(q, history);
+//			
+//		}else if (this.maze[x][y-1] == '.') {//east
+//			System.out.println("E");
+//			
+//			Point p = new Point(x, y-1);
+//			q.enqueue(p);
+//			history.enqueue(p);
+//			q.dequeue();
+//			this.solverHelper(q, history);
+//			
+//		}else if (this.maze[x][y+1] == '.') {//west
+//			System.out.println("W");
+//			Point p = new Point(x, y+1);
+//			
+//			q.enqueue(p);
+//			history.enqueue(p);
+//			q.dequeue();
+//			this.solverHelper(q, history);
+//			
+//		}else {
+//			System.out.println("dead end?");
+//		}
+				
+	}
+	
+	boolean contains(Queue<Point> data, Point target) {
+		
+		return false;
 		
 	}
 	
