@@ -21,15 +21,17 @@ follow in order to solve this problem or to get started with it
 	approach
 9) Understand why the 2 approaches generate different paths
 10) What do the paths look like for the 2 approaches? Are they predictable?
-10.5)How do I format the maze so that it is easily readable
-11) Begin programming the stack approach for map based and coordinate inputs
-11a) Make sure I can return both outputs
-12) Begin programming the queue approach for map based and coordinate inputs
-12a) Make sure I can return both outputs
-13) Begin on the optimal path for both inputs
-13a) Make sure I can return both outputs
-14) Calculate runtime
-15) Add cmd line arguments 
+
+11) How do I read maps vs coordinate based files. When loading, can I convert them into the  
+same datatype - 2D char array so that the searching algs don't need to change too much for each input  
+//WHERE I AM NOW
+
+12) Begin programming the queue approach
+13) Begin programming the stack approach 
+14) Begin on the optimal path approach
+15) How do I print out the output and have it differ for the coordinate vs map inputs (converting from 2D array to each output)
+16) Calculate runtime
+17) Add cmd line arguments 
 
 
 Remember this plan can change
