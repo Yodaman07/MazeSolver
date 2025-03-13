@@ -96,12 +96,11 @@ public class Map {
 					q.enqueue(new Point(r, c)); //technically its y,x instead of x,y but r,c is consistent with everything else
 				}
 			}
-			System.out.println("");
 		}
 		
 		solverHelper(q, history); // this will invoke the recursive method
 		//For each "path" there will be a unique history list to ensure no backtracking
-		
+		System.out.println(history.toString());
 	}
 	
 	void solverHelper(Queue<Point> q, Queue<Point> history) {
@@ -111,65 +110,50 @@ public class Map {
 		int[] x_c = {-1, 1, 0, 0}; //the x and y coordinate offsets for the box that needs to be checked
 		int[] y_c = {0, 0, -1, 1}; 
 		
+		for (int i = 0; i < x_c.length; i++) { //base case - if any of the accessible tiles are the wolverine buck
+			if (this.maze[x+x_c[i]][y+y_c[i]] == '$') {
+				System.out.println("FOUND WOLVERINE BUCK");
+			}
+		}
 		
-		for (int i = 0; i < x_c.length; i++) {
-			if (this.maze[x+x_c[i]][y+y_c[i]] == '.') {
+		
+		for (int i = 0; i < x_c.length; i++) { // for each of the four places to check
+			if (this.maze[x+x_c[i]][y+y_c[i]] == '$') {System.out.println("a");}
+			if (this.maze[x+x_c[i]][y+y_c[i]] == '.') { //if the tile is '.'
 				Point p = new Point(x+x_c[i], y+y_c[i]);
 				if (contains(history, p)) {return;}
 				
 				q.enqueue(p);
 				history.enqueue(p);
 				q.dequeue();
+//				System.out.println(q.peek());
+//				System.out.println(history.toString());
 				this.solverHelper(q, history);
 			}
-
-		}
-		
-		
-//		if (this.maze[x-1][y] == '.') { // north
-//			System.out.println("N");
-//			Point p = new Point(x-1, y);
-//			q.enqueue(p);
-//			history.enqueue(p);
-//			q.dequeue();
-//			this.solverHelper(q, history);
-//			
-//		}else if (this.maze[x+1][y] == '.'){ //south
-//			System.out.println("S");
-//			Point p = new Point(x+1, y);
-//			q.enqueue(p);
-//			history.enqueue(p);
-//			q.dequeue();
-//			this.solverHelper(q, history);
-//			
-//		}else if (this.maze[x][y-1] == '.') {//east
-//			System.out.println("E");
-//			
-//			Point p = new Point(x, y-1);
-//			q.enqueue(p);
-//			history.enqueue(p);
-//			q.dequeue();
-//			this.solverHelper(q, history);
-//			
-//		}else if (this.maze[x][y+1] == '.') {//west
-//			System.out.println("W");
-//			Point p = new Point(x, y+1);
-//			
-//			q.enqueue(p);
-//			history.enqueue(p);
-//			q.dequeue();
-//			this.solverHelper(q, history);
-//			
-//		}else {
-//			System.out.println("dead end?");
-//		}
-				
+		}				
 	}
 	
-	boolean contains(Queue<Point> data, Point target) {
+	boolean contains(Queue<Point> data, Point target) { //Method works as intended - verified by tester
+		//Method to find if a Queue contains a specific value
+		//data = [(1,2),(3,4),(5,6)]
+		//temp will become [(1,2),(3,4),(5,6)] and data = []
+		//data = [(1,2),(3,4),(5,6)] and temp = []
 		
-		return false;
+		boolean found = false;
+		Queue<Point> temp = new Queue<Point>();
+		int itterations = data.size();
+
+		for (int i = 0; i < itterations; i++) {
+			Point curr = data.dequeue();
+			if (curr.equals(target)) {found = true;}
+			temp.enqueue(curr);
+		}
 		
+		for (int i = 0; i < itterations; i++) {
+			data.enqueue(temp.dequeue());
+		}
+		
+		return found;
 	}
 	
 }

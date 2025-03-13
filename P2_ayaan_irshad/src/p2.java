@@ -1,4 +1,7 @@
+import java.awt.Point;
 import java.util.Stack;
+
+import DataStructures.Queue;
 
 public class p2 {
 	public static void main(String[] args) {
@@ -7,7 +10,7 @@ public class p2 {
 		m.load();
 		m.printMaze();
 		m.solver();
-//		System.out.println(m.loadMaze());
+	
 	}
 
 }
