@@ -71,11 +71,8 @@ public class Map {
 	}
 	
 	
-	
-	
 	public void printMaze() {
 		if (this.maze == null) {System.out.println("You need to load a maze");}
-		
 		
 		for (int r = 0; r < this.rows; r++) {
 			for (int c = 0; c < this.cols; c++) {
@@ -88,7 +85,7 @@ public class Map {
 	public void solver() { //develop class for
 		Queue<Point> q = new Queue<Point>();
 		Queue<Point> history = new Queue<Point>();
-//		ArrayLit
+		Queue<Point> path = new Queue<Point>();
 		
 		for (int r = 0; r < this.rows; r++) {
 			for (int c = 0; c < this.cols; c++) {
@@ -98,12 +95,12 @@ public class Map {
 			}
 		}
 		
-		solverHelper(q, history); // this will invoke the recursive method
+		solverHelper(q, history, path); // this will invoke the recursive method
 		//For each "path" there will be a unique history list to ensure no backtracking
-		System.out.println(history.toString());
+//		System.out.println(history.toString());
 	}
 	
-	void solverHelper(Queue<Point> q, Queue<Point> history) {
+	void solverHelper(Queue<Point> q, Queue<Point> history, Queue<Point> path) {
 		int x = q.peek().x;
 		int y = q.peek().y;
 		
@@ -113,22 +110,22 @@ public class Map {
 		for (int i = 0; i < x_c.length; i++) { //base case - if any of the accessible tiles are the wolverine buck
 			if (this.maze[x+x_c[i]][y+y_c[i]] == '$') {
 				System.out.println("FOUND WOLVERINE BUCK");
+				System.out.println(history.toString());
 			}
 		}
 		
-		
 		for (int i = 0; i < x_c.length; i++) { // for each of the four places to check
-			if (this.maze[x+x_c[i]][y+y_c[i]] == '$') {System.out.println("a");}
 			if (this.maze[x+x_c[i]][y+y_c[i]] == '.') { //if the tile is '.'
 				Point p = new Point(x+x_c[i], y+y_c[i]);
-				if (contains(history, p)) {return;}
-				
-				q.enqueue(p);
-				history.enqueue(p);
-				q.dequeue();
-//				System.out.println(q.peek());
-//				System.out.println(history.toString());
-				this.solverHelper(q, history);
+				if (!contains(history, p)) {
+					q.enqueue(p);
+					history.enqueue(p);
+					path.enqueue(p);
+					q.dequeue();
+//					System.out.println(q.peek());
+//					System.out.println(history.toString());
+					this.solverHelper(q, history, path);
+				}
 			}
 		}				
 	}
