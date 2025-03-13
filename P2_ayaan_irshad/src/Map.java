@@ -125,8 +125,8 @@ public class Map {
 					q.dequeue();
 //					System.out.println(q.peek());
 //					System.out.println(history.toString());
-					boolean a = this.solverHelper(q, history, path);
-					if (a) {
+					boolean pathWorks = this.solverHelper(q, history, path); //if the path results in finding the wolverine coin
+					if (!pathWorks) { //if it doesn't work, remove the elements that stem to that result from the path
 						remove(path, p);
 					}
 				}
