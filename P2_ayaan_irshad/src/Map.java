@@ -97,20 +97,21 @@ public class Map {
 		
 		solverHelper(q, history, path); // this will invoke the recursive method
 		//For each "path" there will be a unique history list to ensure no backtracking
-//		System.out.println(history.toString());
+		System.out.println(history.toString());
 	}
 	
-	void solverHelper(Queue<Point> q, Queue<Point> history, Queue<Point> path) {
+	boolean solverHelper(Queue<Point> q, Queue<Point> history, Queue<Point> path) {
 		int x = q.peek().x;
 		int y = q.peek().y;
 		
 		int[] x_c = {-1, 1, 0, 0}; //the x and y coordinate offsets for the box that needs to be checked
 		int[] y_c = {0, 0, -1, 1}; 
 		
-		for (int i = 0; i < x_c.length; i++) { //base case - if any of the accessible tiles are the wolverine buck
+		for (int i = 0; i < x_c.length; i++) { //base case - if any of the accessible tiles are the wolverine coin
 			if (this.maze[x+x_c[i]][y+y_c[i]] == '$') {
-				System.out.println("FOUND WOLVERINE BUCK");
-				System.out.println(history.toString());
+				System.out.println("FOUND WOLVERINE COIN");
+				System.out.println(path.toString());
+				return true;
 			}
 		}
 		
@@ -124,10 +125,14 @@ public class Map {
 					q.dequeue();
 //					System.out.println(q.peek());
 //					System.out.println(history.toString());
-					this.solverHelper(q, history, path);
+					boolean a = this.solverHelper(q, history, path);
+					if (a) {
+						remove(path, p);
+					}
 				}
 			}
 		}				
+		return false;
 	}
 	
 	boolean contains(Queue<Point> data, Point target) { //Method works as intended - verified by tester
@@ -151,6 +156,26 @@ public class Map {
 		}
 		
 		return found;
+	}
+	
+	void remove(Queue<Point> data, Point target) { //removes a specific element from the list and returns that element
+		if (!contains(data, target)) {return;} //verified and tested
+		
+		//assuming the item to remove is in the list
+		Queue<Point> temp = new Queue<Point>();
+		int itterations = data.size();
+
+		for (int i = 0; i < itterations; i++) {
+			Point curr = data.dequeue();
+			if (!curr.equals(target)) {
+				temp.enqueue(curr);
+			}
+		}
+		
+		for (int i = 0; i < itterations-1; i++) {
+			data.enqueue(temp.dequeue());
+		}
+				
 	}
 	
 }
