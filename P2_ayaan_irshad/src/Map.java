@@ -82,7 +82,10 @@ public class Map {
 		}
 	}
 	
-	
+	boolean inBounds(Point p) { //checks to see if a specified point is in the bounds of the maze
+		// x is rows, y is columns
+		return ((p.x < this.getRows()) && (0 <= p.x) && (p.y < this.getCols()) && (0 <= p.y));
+	}
 	public char[][] getMaze(){return this.maze;}
 	public boolean isCoordBased() { return coordBased; }
 	public int getRows() { return rows; }

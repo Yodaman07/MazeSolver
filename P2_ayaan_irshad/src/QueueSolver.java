@@ -23,7 +23,8 @@ public class QueueSolver {
 			}
 		}
 		
-		solverHelper(q, history, path); // this will invoke the recursive method
+		boolean res = solverHelper(q, history, path); // this will invoke the recursive method
+		if (!res) {System.out.println("The Wolverine Store is closed.");}
 		//For each "path" there will be a unique history list to ensure no backtracking
 	}
 	
@@ -35,7 +36,7 @@ public class QueueSolver {
 		int[] y_c = {0, 0, -1, 1}; 
 	
 		for (int i = 0; i < x_c.length; i++) { //base case - if any of the accessible tiles are the wolverine coin
-			if (inBounds(new Point(x+x_c[i], y+y_c[i]))) {
+			if (this.map.inBounds(new Point(x+x_c[i], y+y_c[i]))) {
 				if (this.map.getMaze()[x+x_c[i]][y+y_c[i]] == '$') {
 					System.out.println("FOUND WOLVERINE COIN");
 					//WITH VALID PATH
@@ -50,7 +51,7 @@ public class QueueSolver {
 		
 		for (int i = 0; i < x_c.length; i++) { // for each of the four places to check
 			Point p = new Point(x+x_c[i], y+y_c[i]);
-			if (inBounds(p)) {
+			if (this.map.inBounds(p)) {
 				if (this.map.getMaze()[x+x_c[i]][y+y_c[i]] == '.') { //if the tile is '.'	
 					if (!contains(history, p)) {
 						q.enqueue(p);
@@ -129,9 +130,5 @@ public class QueueSolver {
 		}		
 	}
 	
-	boolean inBounds(Point p) { //checks to see if a specified point is in the bounds of the maze
-		// x is rows, y is columns
-		return ((p.x < this.map.getRows()) && (0 <= p.x) && (p.y < this.map.getCols()) && (0 <= p.y));
-	}
 	
 }

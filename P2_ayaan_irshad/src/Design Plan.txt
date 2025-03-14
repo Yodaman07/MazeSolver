@@ -24,9 +24,8 @@ follow in order to solve this problem or to get started with it
 
 11) How do I read maps vs coordinate based files. When loading, can I convert them into the  
 same datatype - 2D char array so that the searching algs don't need to change too much for each input  
-//WHERE I AM NOW
-
 12) Begin programming the queue approach
+//WHERE I AM NOW
 13) Begin programming the stack approach 
 14) Begin on the optimal path approach
 15) How do I print out the output and have it differ for the coordinate vs map inputs (converting from 2D array to each output)

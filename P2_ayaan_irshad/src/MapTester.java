@@ -75,18 +75,17 @@ class MapTester {
 	void testInBounds() {
 		Map m = new Map("src/TEST05.txt", false);
 		m.load();
-		QueueSolver qs = new QueueSolver(m);
 		
-		assertTrue(qs.inBounds(new Point(0, 0)) == true); // left before the map ends
-		assertTrue(qs.inBounds(new Point(0, -1)) == false); // to the left after the map ends
-		assertTrue(qs.inBounds(new Point(0, 4)) == true); //far right before the map ends
-		assertTrue(qs.inBounds(new Point(0, 6)) == false); // far right past the map
+		assertTrue(m.inBounds(new Point(0, 0)) == true); // left before the map ends
+		assertTrue(m.inBounds(new Point(0, -1)) == false); // to the left after the map ends
+		assertTrue(m.inBounds(new Point(0, 4)) == true); //far right before the map ends
+		assertTrue(m.inBounds(new Point(0, 6)) == false); // far right past the map
 		
 		
-		assertTrue(qs.inBounds(new Point(0, 0)) == true); // up before the map ends
-		assertTrue(qs.inBounds(new Point(-1, 0)) == false); // up after the map ends
-		assertTrue(qs.inBounds(new Point(7, 0)) == true);  // down before the map ends
-		assertTrue(qs.inBounds(new Point(8, 0)) == false); // down after the map ends
+		assertTrue(m.inBounds(new Point(0, 0)) == true); // up before the map ends
+		assertTrue(m.inBounds(new Point(-1, 0)) == false); // up after the map ends
+		assertTrue(m.inBounds(new Point(7, 0)) == true);  // down before the map ends
+		assertTrue(m.inBounds(new Point(8, 0)) == false); // down after the map ends
 	}
 
 }
