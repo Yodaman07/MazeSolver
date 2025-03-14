@@ -10,7 +10,7 @@ public class Map {
 	
 	private String path;
 	private boolean coordBased;
-	private char[][] maze; //3d array to hold multiple rooms
+	public char[][] maze; //3d array to hold multiple rooms
 	
 	private int rows;
 	private int cols;
@@ -185,7 +185,7 @@ public class Map {
 	
 	boolean inBounds(Point p) { //checks to see if a specified point is in the bounds of the maze
 		// x is rows, y is columns
-		return ((p.x <= this.rows) && (0 <= p.x) && (p.y <= this.cols) && (0 <= p.y));
+		return ((p.x < this.rows) && (0 <= p.x) && (p.y < this.cols) && (0 <= p.y));
 	}
 	
 }
