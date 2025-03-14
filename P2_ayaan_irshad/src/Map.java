@@ -97,7 +97,7 @@ public class Map {
 		
 		solverHelper(q, history, path); // this will invoke the recursive method
 		//For each "path" there will be a unique history list to ensure no backtracking
-		System.out.println(history.toString());
+//		System.out.println(history.toStrings());
 	}
 	
 	boolean solverHelper(Queue<Point> q, Queue<Point> history, Queue<Point> path) {
@@ -106,32 +106,37 @@ public class Map {
 		
 		int[] x_c = {-1, 1, 0, 0}; //the x and y coordinate offsets for the box that needs to be checked
 		int[] y_c = {0, 0, -1, 1}; 
-		
+	
 		for (int i = 0; i < x_c.length; i++) { //base case - if any of the accessible tiles are the wolverine coin
-			if (this.maze[x+x_c[i]][y+y_c[i]] == '$') {
-				System.out.println("FOUND WOLVERINE COIN");
-				System.out.println(path.toString());
-				return true;
+			if (inBounds(new Point(x+x_c[i], y+y_c[i]))) {
+				if (this.maze[x+x_c[i]][y+y_c[i]] == '$') {
+					System.out.println("FOUND WOLVERINE COIN");
+					System.out.println(path.toString());
+					return true;
+				}
 			}
 		}
 		
 		for (int i = 0; i < x_c.length; i++) { // for each of the four places to check
-			if (this.maze[x+x_c[i]][y+y_c[i]] == '.') { //if the tile is '.'
-				Point p = new Point(x+x_c[i], y+y_c[i]);
-				if (!contains(history, p)) {
-					q.enqueue(p);
-					history.enqueue(p);
-					path.enqueue(p);
-					q.dequeue();
-//					System.out.println(q.peek());
-//					System.out.println(history.toString());
-					boolean pathWorks = this.solverHelper(q, history, path); //if the path results in finding the wolverine coin
-					if (!pathWorks) { //if it doesn't work, remove the elements that stem to that result from the path
-						remove(path, p);
+			Point p = new Point(x+x_c[i], y+y_c[i]);
+			if (inBounds(p)) {
+				if (this.maze[x+x_c[i]][y+y_c[i]] == '.') { //if the tile is '.'	
+					if (!contains(history, p)) {
+						q.enqueue(p);
+						history.enqueue(p);
+						path.enqueue(p);
+						q.dequeue();
+	//					System.out.println(q.peek());
+	//					System.out.println(history.toString());
+						boolean pathWorks = this.solverHelper(q, history, path); //if the path results in finding the wolverine coin
+						if (!pathWorks) { //if it doesn't work, remove the elements that stem to that result from the path
+							remove(path, p);
+						}
 					}
 				}
 			}
 		}				
+		
 		return false;
 	}
 	
@@ -176,6 +181,11 @@ public class Map {
 			data.enqueue(temp.dequeue());
 		}
 				
+	}
+	
+	boolean inBounds(Point p) { //checks to see if a specified point is in the bounds of the maze
+		// x is rows, y is columns
+		return ((p.x <= this.rows) && (0 <= p.x) && (p.y <= this.cols) && (0 <= p.y));
 	}
 	
 }
