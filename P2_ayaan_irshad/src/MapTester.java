@@ -5,11 +5,12 @@ import java.awt.Point;
 import org.junit.jupiter.api.Test;
 
 import DataStructures.Queue;
+import DataStructures.Stack;
 
 class MapTester {
 
 	@Test
-	void testContains() { //test the contains method in the Map Class 
+	void testQueueContains() { //test the contains method in the Map Class 
 		Map m = new Map("src/TEST01.txt", false);
 		m.load();
 		Queue<Point> q = new Queue<Point>();
@@ -33,7 +34,32 @@ class MapTester {
 	}
 	
 	@Test
-	void testRemove() { //test the remove method from the Map Class
+	void testStackContains() {
+		Map m = new Map("src/TEST01.txt", false);
+		m.load();
+		Stack<Point> s = new Stack<Point>();
+		StackSolver ss = new StackSolver(m);
+
+		
+		s.push(new Point(1,2));
+		s.push(new Point(3,4));
+		s.push(new Point(5,6));
+		
+//		System.out.println(q.toString());
+		String str1 = s.toString();
+		assertTrue(ss.contains(s, new Point(1,2)) == true); //Edge cases
+		String str2 = s.toString();
+		assertTrue(str1.equals(str2));
+		
+		assertTrue(ss.contains(s, new Point(3,4)) == true); //normal case
+		assertTrue(ss.contains(s, new Point(5,6)) == true); //Edge cases
+		
+		assertTrue(str1.equals(s.toString()));
+	}
+	
+	
+	@Test
+	void testQueueRemove() { //test the remove method from the Map Class
 		Map m = new Map("src/TEST01.txt", false);
 		m.load();
 		QueueSolver qs = new QueueSolver(m);
@@ -69,6 +95,46 @@ class MapTester {
 		
 		qs.remove(q, new Point(1,1));
 		assertTrue(q.toString().equals("[java.awt.Point[x=1,y=2], java.awt.Point[x=3,y=4]]"));
+	}
+	
+	
+	@Test
+	void testStackRemove() { //test the remove method from the Map Class
+		Map m = new Map("src/TEST01.txt", false);
+		m.load();
+		StackSolver ss = new StackSolver(m);
+		Stack<Point> s = new Stack<Point>();
+		s.push(new Point(1,2));
+		s.push(new Point(3,4));
+		s.push(new Point(5,6));
+		
+		ss.remove(s, new Point(1,2)); 
+//		System.out.println(q.toString()); //middle elmn
+		assertTrue(s.toString().equals("[java.awt.Point[x=3,y=4], java.awt.Point[x=5,y=6]]"));
+		
+		s.pop();s.pop(); // --------
+
+		s.push(new Point(1,2));
+		s.push(new Point(3,4));
+		s.push(new Point(5,6));
+		
+		ss.remove(s, new Point(3,4));
+//		System.out.println(q.toString()); //edge case
+		assertTrue(s.toString().equals("[java.awt.Point[x=1,y=2], java.awt.Point[x=5,y=6]]"));
+		
+	
+		s.pop();s.pop(); // --------
+		
+		s.push(new Point(1,2));
+		s.push(new Point(3,4));
+		s.push(new Point(5,6));
+		
+		ss.remove(s, new Point(5,6));
+//		System.out.println(q.toString()); // edge case
+		assertTrue(s.toString().equals("[java.awt.Point[x=1,y=2], java.awt.Point[x=3,y=4]]"));
+		
+		ss.remove(s, new Point(1,1));
+		assertTrue(s.toString().equals("[java.awt.Point[x=1,y=2], java.awt.Point[x=3,y=4]]"));
 	}
 	
 	@Test
