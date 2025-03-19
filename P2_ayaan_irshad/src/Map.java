@@ -10,11 +10,11 @@ public class Map {
 	
 	private String path;
 	private boolean coordBased;
-	private char[][] maze; //3d array to hold multiple rooms
+	private char[][][] maze; //3d array to hold multiple rooms
 	
 	private int rows;
 	private int cols;
-	private int level;
+	private int levels;
 	
 	public Map(String filePath, boolean coordBased) {
 		this.path = filePath;
@@ -31,35 +31,35 @@ public class Map {
 			
 			this.rows = Integer.valueOf(data[0]);
 			this.cols = Integer.valueOf(data[1]);
-			this.level = Integer.valueOf(data[2]);
-			this.maze = new char[this.rows][this.cols];
+			this.levels = Integer.valueOf(data[2]);
+			this.maze = new char[this.rows][this.cols][this.levels];
 //			System.out.println(rows + ":" + cols + ":" + level);
 			
 			if (!coordBased) { //loading regular map based mazes
 				int r = 0;
-				while (s.hasNextLine() && r < this.rows) {
+				while (s.hasNextLine() && r < this.rows*this.levels) {
 					String line = s.nextLine(); 
 					for (int i = 0; i < this.cols; i++) {
-						this.maze[r][i] = line.charAt(i);
+						this.maze[r][i][this.rows/this.levels] = line.charAt(i);
 					}
 					r++;
 				}
 			}else { //loading coordinate based mazes
-				while (s.hasNextLine()) {
-					char elmn = s.next().toCharArray()[0]; //only 1 char
-					int row = s.nextInt();
-					int col = s.nextInt();
-					int lvl = s.nextInt();
-					System.out.println(elmn + " " + row + " " + col + " " + lvl);
-					this.maze[row][col] = elmn;
-				}
-				
-				for (int r = 0; r < this.rows; r++) {
-					for (int c = 0; c < this.cols; c++) {
-						if (this.maze[r][c] == '\u0000') {this.maze[r][c] = '.';}
-						
-					}
-				}
+//				while (s.hasNextLine()) {
+//					char elmn = s.next().toCharArray()[0]; //only 1 char
+//					int row = s.nextInt();
+//					int col = s.nextInt();
+//					int lvl = s.nextInt();
+//					System.out.println(elmn + " " + row + " " + col + " " + lvl);
+//					this.maze[row][col] = elmn;
+//				}
+//				
+//				for (int r = 0; r < this.rows; r++) {
+//					for (int c = 0; c < this.cols; c++) {
+//						if (this.maze[r][c] == '\u0000') {this.maze[r][c] = '.';}
+//						
+//					}
+//				}
 				
 			}
 			
@@ -76,7 +76,9 @@ public class Map {
 		
 		for (int r = 0; r < this.rows; r++) {
 			for (int c = 0; c < this.cols; c++) {
-				System.out.print(this.maze[r][c]);
+				for (int l = 0; l <this.levels; l++) {
+					System.out.print(this.maze[r][c][l]);
+				}
 			}
 			System.out.println("");
 		}
@@ -86,9 +88,10 @@ public class Map {
 		// x is rows, y is columns
 		return ((p.x < this.getRows()) && (0 <= p.x) && (p.y < this.getCols()) && (0 <= p.y));
 	}
-	public char[][] getMaze(){return this.maze;}
+	public char[][][] getMaze(){return this.maze;}
 	public boolean isCoordBased() { return coordBased; }
 	public int getRows() { return rows; }
 	public int getCols() { return cols; }
+	public int getLevels() { return levels; }
 	
 }

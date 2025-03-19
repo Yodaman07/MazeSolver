@@ -5,8 +5,11 @@ import DataStructures.Queue;
 public class QueueSolver {
 	
 	Map map;
+	Queue<Point> realPath;
+	
 	
 	public QueueSolver(Map m) {
+		realPath = new Queue<Point>();
 		this.map = m;
 	}
 	
@@ -23,12 +26,18 @@ public class QueueSolver {
 			}
 		}
 		
-		boolean res = solverHelper(q, history, path); // this will invoke the recursive method
+		boolean res = solverHelper(q, history, path, '$'); // this will invoke the recursive method
+		this.map.printMaze();
+		System.out.println("");
+		this.printRes(realPath);
+		
+		
 		if (!res) {System.out.println("The Wolverine Store is closed.");}
 		//For each "path" there will be a unique history list to ensure no backtracking
 	}
 	
-	private boolean solverHelper(Queue<Point> q, Queue<Point> history, Queue<Point> path) {
+	private boolean solverHelper(Queue<Point> q, Queue<Point> history, Queue<Point> path, char finding) {
+		//finding is the char to search for - for multi-level mazes, you want to look for | in the 0th level then $
 		int x = q.peek().x;
 		int y = q.peek().y;
 		
@@ -39,10 +48,8 @@ public class QueueSolver {
 			if (this.map.inBounds(new Point(x+x_c[i], y+y_c[i]))) {
 				if (this.map.getMaze()[x+x_c[i]][y+y_c[i]] == '$') {
 					System.out.println("FOUND WOLVERINE COIN");
+					realPath = path;
 					//WITH VALID PATH
-					this.map.printMaze();
-					System.out.println("");
-					this.printRes(path);
 					
 					return true;
 				}
@@ -58,7 +65,7 @@ public class QueueSolver {
 						history.enqueue(p);
 						path.enqueue(p);
 						q.dequeue();
-						boolean pathWorks = this.solverHelper(q, history, path); //if the path results in finding the wolverine coin
+						boolean pathWorks = this.solverHelper(q, history, path, finding); //if the path results in finding the wolverine coin
 						if (pathWorks) {return true;}
 						if (!pathWorks) { //if it doesn't work, remove the elements that stem to that result from the path
 							remove(path, p);
