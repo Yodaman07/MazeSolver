@@ -29,7 +29,7 @@ same datatype - 2D char array so that the searching algs don't need to change to
 
 //WHERE I AM NOW
 15) How do I print out the output and have it differ for the coordinate vs map inputs (converting from 2D array to each output)
- 
+15.5) add functionality for the "levels" (|)
 14) Begin on the optimal path approach
 16) Calculate runtime
 17) Add cmd line arguments 

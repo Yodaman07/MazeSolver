@@ -71,22 +71,33 @@ public class QueueSolver {
 		return false;
 	}
 	
-	void printRes(Queue<Point> path) {
-		char[][] temp = this.map.getMaze().clone();
-		
-		int iterations = path.size();
-		for (int j = 0; j < iterations; j++) {
-			Point val = path.dequeue(); 
-			temp[val.x][val.y] = '+';
-		}
-		
-		for (int r = 0; r < this.map.getRows(); r++) {
-			for (int c = 0; c < this.map.getCols(); c++) {
-				System.out.print(temp[r][c]);
+	void printRes(Queue<Point> path) { //prints in map based and coordinate based
+		if (!map.isCoordBased()) { //map based
+			char[][] temp = this.map.getMaze().clone();
+			
+			int iterations = path.size();
+			for (int j = 0; j < iterations; j++) {
+				Point val = path.dequeue(); 
+				temp[val.x][val.y] = '+';
 			}
-			System.out.println("");
+			
+			for (int r = 0; r < this.map.getRows(); r++) {
+				for (int c = 0; c < this.map.getCols(); c++) {
+					System.out.print(temp[r][c]);
+				}
+				System.out.println("");
+			}
+		}else { //for coord based
+			int size = path.size();
+			for (int i = 0; i<size; i++) {
+				Point a = path.dequeue();
+				System.out.println("+ " + a.x + " " + a.y + " 1"); //TODO FIX |
+			}
+			
 		}
+		
 	}
+	
 	
 	boolean contains(Queue<Point> data, Point target) { //Method works as intended - verified by tester
 		//Method to find if a Queue contains a specific value
