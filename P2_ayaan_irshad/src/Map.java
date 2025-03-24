@@ -33,16 +33,18 @@ public class Map {
 			this.cols = Integer.valueOf(data[1]);
 			this.levels = Integer.valueOf(data[2]);
 			this.maze = new char[this.rows][this.cols][this.levels];
-//			System.out.println(rows + ":" + cols + ":" + level);
+//			System.out.println(rows + ":" + cols + ":" + levels);
 			
 			if (!coordBased) { //loading regular map based mazes
-				int r = 0;
-				while (s.hasNextLine() && r < this.rows*this.levels) {
-					String line = s.nextLine(); 
-					for (int i = 0; i < this.cols; i++) {
-						this.maze[r][i][this.rows/this.levels] = line.charAt(i);
+				for (int l = 0; l < levels; l++) {
+					int r = 0;
+					while (s.hasNextLine() && r < this.rows) {
+						String line = s.nextLine(); 
+						for (int i = 0; i < this.cols; i++) {
+							this.maze[r][i][l] = line.charAt(i);
+						}
+						r++;
 					}
-					r++;
 				}
 			}else { //loading coordinate based mazes
 //				while (s.hasNextLine()) {
@@ -74,13 +76,14 @@ public class Map {
 	public void printMaze() {
 		if (this.maze == null) {System.out.println("You need to load a maze");}
 		
-		for (int r = 0; r < this.rows; r++) {
-			for (int c = 0; c < this.cols; c++) {
-				for (int l = 0; l <this.levels; l++) {
+		for (int l = 0; l <this.levels; l++) {
+			for (int r = 0; r < this.rows; r++) {
+				for (int c = 0; c < this.cols; c++) {
 					System.out.print(this.maze[r][c][l]);
+					
 				}
+				System.out.println("");
 			}
-			System.out.println("");
 		}
 	}
 	
