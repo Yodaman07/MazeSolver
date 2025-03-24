@@ -9,10 +9,10 @@ public class p2 {
 		Map m = new Map("src/TEST12.txt", true);
 		m.load(); //MAKE SURE TO LOAD THE MAP BEFORE DOING ANYTHING WITH IT
 //		m.printMaze();
-		QueueSolver qs = new QueueSolver(m);
-		qs.solve();
-//		StackSolver ss = new StackSolver(m);
-//		ss.solve();
+//		QueueSolver qs = new QueueSolver(m);
+//		qs.solve();
+		StackSolver ss = new StackSolver(m);
+		ss.solve();
 
 	
 	}
