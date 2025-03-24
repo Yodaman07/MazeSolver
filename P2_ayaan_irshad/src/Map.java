@@ -47,21 +47,26 @@ public class Map {
 					}
 				}
 			}else { //loading coordinate based mazes
-//				while (s.hasNextLine()) {
-//					char elmn = s.next().toCharArray()[0]; //only 1 char
-//					int row = s.nextInt();
-//					int col = s.nextInt();
-//					int lvl = s.nextInt();
-//					System.out.println(elmn + " " + row + " " + col + " " + lvl);
-//					this.maze[row][col] = elmn;
-//				}
-//				
-//				for (int r = 0; r < this.rows; r++) {
-//					for (int c = 0; c < this.cols; c++) {
-//						if (this.maze[r][c] == '\u0000') {this.maze[r][c] = '.';}
-//						
-//					}
-//				}
+				while (s.hasNextLine()) {
+					char elmn = s.next().toCharArray()[0]; //only 1 char
+					int row = s.nextInt();
+					int col = s.nextInt();
+					int lvl = s.nextInt();
+					System.out.println(elmn + " " + row + " " + col + " " + lvl);
+					this.maze[row][col][lvl] = elmn;
+				}
+				
+				for (int l = 0; l <this.levels; l++) {
+					
+					for (int r = 0; r < this.rows; r++) {
+						for (int c = 0; c < this.cols; c++) {
+							if (this.maze[r][c][l] == '\u0000') {this.maze[r][c][l] = '.';} // \u0000 is ascii null value
+							
+						}
+					}
+					
+				}
+				
 				
 			}
 			
