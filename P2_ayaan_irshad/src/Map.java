@@ -46,6 +46,7 @@ public class Map {
 						r++;
 					}
 				}
+				this.printMaze();
 			}else { //loading coordinate based mazes
 				while (s.hasNextLine()) {
 					char elmn = s.next().toCharArray()[0]; //only 1 char
@@ -60,8 +61,7 @@ public class Map {
 					
 					for (int r = 0; r < this.rows; r++) {
 						for (int c = 0; c < this.cols; c++) {
-							if (this.maze[r][c][l] == '\u0000') {this.maze[r][c][l] = '.';} // \u0000 is ascii null value
-							
+							if (this.maze[r][c][l] == '\u0000') {this.maze[r][c][l] = '.';} // \u0000 is ascii null value						
 						}
 					}
 					
