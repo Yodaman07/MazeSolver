@@ -57,6 +57,20 @@ public class OptimalSolver {
 		int[] y_c = {0, 0, -1, 1}; 
 		int[] points_c = {0,0,0,0}; //if something has the same point value, then we can just chose it in the north south east west order
 		
+		for (int i = 0; i < x_c.length; i++) { //base case - if any of the accessible tiles are the wolverine coin
+			if (this.map.inBounds(new Point(x+x_c[i], y+y_c[i]))) {
+				if (this.map.getMaze()[x+x_c[i]][y+y_c[i]][level] == this.map.getMaze()[goal.x][goal.y][level]) {
+					System.out.println("WE DID IT!!!!!");
+//					this.printRes(path, level);
+					return true;
+				}
+			}
+		}
+		
+		
+		
+		
+		
 		for (int i = 0; i < x_c.length; i++) { // for each of the four places to check
 			Point p = new Point(x+x_c[i], y+y_c[i]);
 			if (this.map.inBounds(p)) {
@@ -75,13 +89,17 @@ public class OptimalSolver {
 			}
 		}
 		
-		for (int a : points_c) {System.out.println(a);}
+		int nextI = getNextIndex(points_c);
+		Point nextPos = new Point(x+x_c[nextI], y+y_c[nextI]);
+		history.add(pos);
+		boolean works = this.solverHelper(nextPos, goal, level, history, path);
+		if (works) {return true;}
 		
 		
 		return false;
 	}
 	
-	private int getBiggestIndex(int[] array) {
+	private int getNextIndex(int[] array, ArrayList<Point> history) {
 		int max = array[0];
 		for (int i = 0; i < array.length; i++) {
 			if (array[i] > max) {max = array[i];}
