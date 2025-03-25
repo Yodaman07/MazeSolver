@@ -105,7 +105,7 @@ public class QueueSolver {
 			int size = path.size();
 			for (int i = 0; i<size; i++) {
 				Point a = path.dequeue();
-				System.out.println("+ " + a.x + " " + a.y + " " + level); //TODO FIX |
+				System.out.println("+ " + a.x + " " + a.y + " " + level);
 			}
 			
 		}
