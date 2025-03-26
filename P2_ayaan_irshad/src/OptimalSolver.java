@@ -35,6 +35,8 @@ public class OptimalSolver {
 			
 			
 //			boolean res = solverHelper(pos, history, path, finding, l); // this will invoke the recursive method
+			System.out.println(pos);
+			System.out.println(" ");
 			boolean res = solverHelper(pos, goal, l, history, path);
 			System.out.println(res);
 //			if (!res) {System.out.println("The Wolverine Store is closed.");}
@@ -48,7 +50,6 @@ public class OptimalSolver {
 		//instead of recursively looping through every possible case to get to the goal, 
 		//we should decide it more "intelligently"
 		//This can be done by assigning a "point" value to each move in relation to how close to the goal it gets us
-		
 		int x = pos.x;
 		int y = pos.y;
 		
@@ -58,10 +59,11 @@ public class OptimalSolver {
 		int[] points_c = {0,0,0,0}; //if something has the same point value, then we can just chose it in the north south east west order
 		
 		for (int i = 0; i < x_c.length; i++) { //base case - if any of the accessible tiles are the wolverine coin
-			if (this.map.inBounds(new Point(x+x_c[i], y+y_c[i]))) {
+			Point a = new Point(x+x_c[i], y+y_c[i]);
+			if (this.map.inBounds(a)) {
 				if (this.map.getMaze()[x+x_c[i]][y+y_c[i]][level] == this.map.getMaze()[goal.x][goal.y][level]) {
 					System.out.println("WE DID IT!!!!!");
-//					this.printRes(path, level);
+					this.printRes(path, level);
 					return true;
 				}
 			}
@@ -70,41 +72,39 @@ public class OptimalSolver {
 		
 		
 		
-		
+		int maxIndex = 0;
 		for (int i = 0; i < x_c.length; i++) { // for each of the four places to check
 			Point p = new Point(x+x_c[i], y+y_c[i]);
 			if (this.map.inBounds(p)) {
 				if (this.map.getMaze()[p.x][p.y][level] == '.') { //if the tile is '.'
+					if (!history.contains(p)) { //check before you can actually consider a point
+
 					
-					if (Math.abs(pos.x - goal.x) > Math.abs(p.x - goal.x)) { //if this move gets us closer to the goal
-						points_c[i]++;
+						if (Math.abs(pos.x - goal.x) > Math.abs(p.x - goal.x)) { //if this move gets us closer to the goal
+							points_c[i]++;
+						}
+						
+						if (Math.abs(pos.y - goal.y) > Math.abs(p.y - goal.y)) { //if this move gets us closer to the goal
+							points_c[i]++;
+						} 
+						
+						if (points_c[i] > maxIndex) {maxIndex = i;}
 					}
-					
-					if (Math.abs(pos.y - goal.y) > Math.abs(p.y - goal.y)) { //if this move gets us closer to the goal
-						points_c[i]++;
-					} 
-					
-					
 				}
 			}
 		}
+				
+		Point nextPos = new Point(x+x_c[maxIndex], y+y_c[maxIndex]);
+		System.out.println(nextPos);
+		history.add(nextPos);
+		path.add(nextPos);
 		
-		int nextI = getNextIndex(points_c);
-		Point nextPos = new Point(x+x_c[nextI], y+y_c[nextI]);
-		history.add(pos);
 		boolean works = this.solverHelper(nextPos, goal, level, history, path);
-		if (works) {return true;}
+//		if (works) {return true;}
+//		if (!works) {path.remove(nextPos);}
 		
 		
 		return false;
-	}
-	
-	private int getNextIndex(int[] array, ArrayList<Point> history) {
-		int max = array[0];
-		for (int i = 0; i < array.length; i++) {
-			if (array[i] > max) {max = array[i];}
-		}
-		return max;
 	}
 	
 //	private boolean solverHelper(Point pos, Point goal, ArrayList<Point> history, ArrayList<Point> path, char finding, int level) {

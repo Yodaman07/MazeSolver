@@ -93,6 +93,7 @@ public class Map {
 	}
 	
 	boolean inBounds(Point p) { //checks to see if a specified point is in the bounds of the maze
+//		System.out.println(p);
 		// x is rows, y is columns
 		return ((p.x < this.getRows()) && (0 <= p.x) && (p.y < this.getCols()) && (0 <= p.y));
 	}
