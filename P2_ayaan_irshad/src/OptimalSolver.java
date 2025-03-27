@@ -34,12 +34,9 @@ public class OptimalSolver {
 			}//find starting pos and goal pos
 			
 			
-//			boolean res = solverHelper(pos, history, path, finding, l); // this will invoke the recursive method
-			System.out.println(pos);
-			System.out.println(" ");
 			boolean res = solverHelper(pos, goal, l, history, path);
-			System.out.println(res);
-//			if (!res) {System.out.println("The Wolverine Store is closed.");}
+//			System.out.println(res);
+			if (!res) {System.out.println("The Wolverine Store is closed.");}
 			//For each "path" there will be a unique history list to ensure no backtracking
 		}
 		
@@ -62,7 +59,7 @@ public class OptimalSolver {
 			Point a = new Point(x+x_c[i], y+y_c[i]);
 			if (this.map.inBounds(a)) {
 				if (this.map.getMaze()[x+x_c[i]][y+y_c[i]][level] == this.map.getMaze()[goal.x][goal.y][level]) {
-					System.out.println("WE DID IT!!!!!");
+//					System.out.println("WE DID IT!!!!!");
 					this.printRes(path, level);
 					return true;
 				}
@@ -98,84 +95,37 @@ public class OptimalSolver {
 		if (allEmpty(points_c)) {//happens when there is no "optimal" move to make
 			//In this event we want to take the first north,south,east,west move that hasn't been taken (like the original alg)
 			
-			System.out.println("OOP");
 			for (int i = 0; i < x_c.length; i++) { // for each of the four places to check
 				Point p = new Point(x+x_c[i], y+y_c[i]);
 				if (this.map.inBounds(p)) {
 					if (this.map.getMaze()[p.x][p.y][level] == '.' && !history.contains(p)) { //if the tile is '.'
-						
-						System.out.println(p);
+						System.out.println(p + "Oop");
 						history.add(p);
 						path.add(p);
 						boolean works = this.solverHelper(p, goal, level, history, path);
+						if (works) {return true;}
+						if (!works) { //if it doesn't work, remove the elements that stem to that result from the path
+							System.out.println("Removed");
+							path.remove(p);
+						}
 
 					}
 				}
 			}
 			
-		}else {//general case
+		}if (!allEmpty(points_c)) {//general case
 			Point nextPos = new Point(x+x_c[maxIndex], y+y_c[maxIndex]);
 			System.out.println(nextPos);
 			history.add(nextPos);
 			path.add(nextPos);
 			boolean works = this.solverHelper(nextPos, goal, level, history, path);
+			if (works) {return true;}
 		}
-//		for (int a : points_c) {
-//			System.out.print(a + "");
-//		}
-//		System.out.println();
-	
-		
-//		
-//		if (works) {return true;}
-//		if (!works) {path.remove(nextPos);}
 		
 		
 		return false;
 	}
 	
-//	private boolean solverHelper(Point pos, Point goal, ArrayList<Point> history, ArrayList<Point> path, char finding, int level) {
-//		//finding is the char to search for - for multi-level mazes, you want to look for | in the 0th level then $
-//		int x = pos.x;
-//		int y = pos.y;
-//		
-//		int[] x_c = {-1, 1, 0, 0}; //the x and y coordinate offsets for the box that needs to be checked
-//		int[] y_c = {0, 0, -1, 1}; 
-//	
-//		for (int i = 0; i < x_c.length; i++) { //base case - if any of the accessible tiles are the wolverine coin
-//			if (this.map.inBounds(new Point(x+x_c[i], y+y_c[i]))) {
-//				if (this.map.getMaze()[x+x_c[i]][y+y_c[i]][level] == finding) {
-//					
-//					this.printRes(path, level);
-//					
-//					//WITH VALID PATH
-////					return true;
-//				}
-//			}
-//		}
-//		
-//		for (int i = 0; i < x_c.length; i++) { // for each of the four places to check
-//			Point p = new Point(x+x_c[i], y+y_c[i]);
-//			if (this.map.inBounds(p)) {
-//				if (this.map.getMaze()[x+x_c[i]][y+y_c[i]][level] == '.') { //if the tile is '.'	
-//					if (!history.contains(p)) {
-//						
-//						history.add(p);
-//						path.add(p);
-//						pos = p;
-//						
-//						boolean pathWorks = this.solverHelper(pos, history, path, finding, level); //if the path results in finding the wolverine coin
-//						if (pathWorks) {return true;}
-//						if (!pathWorks) { //if it doesn't work, remove the elements that stem to that result from the path
-//							path.remove(p);
-//						}
-//					}
-//				}
-//			}
-//		}				
-//		
-//		return false;
-//	}
 	boolean allEmpty(int[] pointsArray) {
 		boolean empty = true;
 		for (int a: pointsArray) {
@@ -184,6 +134,7 @@ public class OptimalSolver {
 		
 		return empty;
 	}
+	
 	void printRes(ArrayList<Point> path, int level) { //prints in map based and coordinate based
 		if (!map.isCoordBased()) { //map based
 			char[][][] temp = this.map.getMaze().clone();
