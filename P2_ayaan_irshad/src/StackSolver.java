@@ -6,13 +6,20 @@ import DataStructures.Stack;
 public class StackSolver {
 	Map map;
 	Stack<Point> realPath;
+	long timeStart;
+	boolean showRuntime;
+	boolean coordOut;
+
 	
-	public StackSolver(Map m) {
+	public StackSolver(Map m, boolean showRuntime, boolean coordOut) {
 		realPath = new Stack<Point>();
 		this.map = m;
+		this.showRuntime = showRuntime;
+		this.coordOut = coordOut;
 	}
 	
 	public void solve() {
+		if (showRuntime) {this.startTimer();}
 		System.out.println(" ");
 	
 		for (int l = 0; l <this.map.getLevels(); l++) { //treat each "level" as an its own path
@@ -83,7 +90,8 @@ public class StackSolver {
 	}
 	
 	void printRes(Stack<Point> path, int level) {
-		if (!map.isCoordBased()) { //map based
+		if (showRuntime) {this.endTimer();}
+		if (!this.coordOut) { //map based
 			char[][][] temp = this.map.getMaze().clone();
 			
 			int iterations = path.size();
@@ -150,5 +158,16 @@ public class StackSolver {
 		}
 		
 		return found;
+	}
+	
+	public void startTimer() {
+		timeStart = System.nanoTime();
+		
+	}
+	
+	public void endTimer() {
+		long diff = System.nanoTime() - timeStart;
+		double seconds = (double)diff / 1_000_000_000.0;
+		System.out.println("Total Runtime: " + seconds + " seconds");
 	}
 }

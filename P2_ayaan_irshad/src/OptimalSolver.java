@@ -5,13 +5,22 @@ import java.util.ArrayList;
 public class OptimalSolver {
 
 	Map map;
-	public OptimalSolver(Map m) {
+	boolean showRuntime;
+	boolean coordOut;
+	long timeStart;
+
+
+	public OptimalSolver(Map m, boolean showRuntime, boolean coordOut) {
+		this.showRuntime = showRuntime;
+		this.coordOut = coordOut;
+			
 		this.map = m;
 	}
 	// The optimal solver uses very similar logic to the queue solver and stack solver
 	//The difference is that it uses an array list to hold data meaning
 	
 	public void solve() {
+		if (showRuntime) {this.startTimer();}
 		System.out.println(" ");
 		for (int l = 0; l <this.map.getLevels(); l++) { //treat each "level" as an its own path
 			char finding = '|';
@@ -136,7 +145,9 @@ public class OptimalSolver {
 	}
 	
 	void printRes(ArrayList<Point> path, int level) { //prints in map based and coordinate based
-		if (!map.isCoordBased()) { //map based
+		if (this.showRuntime) {this.endTimer();}
+
+		if (!this.coordOut) { //map based
 			char[][][] temp = this.map.getMaze().clone();
 			
 			int iterations = path.size();
@@ -161,6 +172,17 @@ public class OptimalSolver {
 			
 		}
 		
+	}
+	
+	public void startTimer() {
+		timeStart = System.nanoTime();
+		
+	}
+	
+	public void endTimer() {
+		long diff = System.nanoTime() - timeStart;
+		double seconds = (double)diff / 1_000_000_000.0;
+		System.out.println("Total Runtime: " + seconds + " seconds");
 	}
 	
 }

@@ -1,4 +1,5 @@
 import java.awt.Point;
+import java.util.concurrent.TimeUnit;
 
 import DataStructures.Queue;
 
@@ -6,14 +7,21 @@ public class QueueSolver {
 	
 	Map map;
 	Queue<Point> realPath;
+	long timeStart;
+	boolean showRuntime;
+	boolean coordOut;
 	
 	
-	public QueueSolver(Map m) {
+	public QueueSolver(Map m, boolean showRuntime, boolean coordOut) {
 		realPath = new Queue<Point>();
 		this.map = m;
+		this.showRuntime = showRuntime;
+		this.coordOut = coordOut;
 	}
 	
 	public void solve() {
+		
+		if (showRuntime) {this.startTimer();}
 		System.out.println(" ");
 		for (int l = 0; l <this.map.getLevels(); l++) { //treat each "level" as an its own path
 			char finding = '|';
@@ -84,8 +92,9 @@ public class QueueSolver {
 		return false;
 	}
 	
-	void printRes(Queue<Point> path, int level) { //prints in map based and coordinate based
-		if (!map.isCoordBased()) { //map based
+	private void printRes(Queue<Point> path, int level) { //prints in map based and coordinate based
+		if (this.showRuntime) {this.endTimer();}
+		if (!this.coordOut) { //map based
 			char[][][] temp = this.map.getMaze().clone();
 			
 			int iterations = path.size();
@@ -155,5 +164,15 @@ public class QueueSolver {
 		}		
 	}
 	
+	public void startTimer() {
+		timeStart = System.nanoTime();
+		
+	}
+	
+	public void endTimer() {
+		long diff = System.nanoTime() - timeStart;
+		double seconds = (double)diff / 1_000_000_000.0;
+		System.out.println("Total Runtime: " + seconds + " seconds");
+	}
 	
 }
