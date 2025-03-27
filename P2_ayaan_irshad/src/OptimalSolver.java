@@ -89,17 +89,44 @@ public class OptimalSolver {
 						} 
 						
 						if (points_c[i] > maxIndex) {maxIndex = i;}
+						
 					}
 				}
 			}
 		}
-				
-		Point nextPos = new Point(x+x_c[maxIndex], y+y_c[maxIndex]);
-		System.out.println(nextPos);
-		history.add(nextPos);
-		path.add(nextPos);
 		
-		boolean works = this.solverHelper(nextPos, goal, level, history, path);
+		if (allEmpty(points_c)) {//happens when there is no "optimal" move to make
+			//In this event we want to take the first north,south,east,west move that hasn't been taken (like the original alg)
+			
+			System.out.println("OOP");
+			for (int i = 0; i < x_c.length; i++) { // for each of the four places to check
+				Point p = new Point(x+x_c[i], y+y_c[i]);
+				if (this.map.inBounds(p)) {
+					if (this.map.getMaze()[p.x][p.y][level] == '.' && !history.contains(p)) { //if the tile is '.'
+						
+						System.out.println(p);
+						history.add(p);
+						path.add(p);
+						boolean works = this.solverHelper(p, goal, level, history, path);
+
+					}
+				}
+			}
+			
+		}else {//general case
+			Point nextPos = new Point(x+x_c[maxIndex], y+y_c[maxIndex]);
+			System.out.println(nextPos);
+			history.add(nextPos);
+			path.add(nextPos);
+			boolean works = this.solverHelper(nextPos, goal, level, history, path);
+		}
+//		for (int a : points_c) {
+//			System.out.print(a + "");
+//		}
+//		System.out.println();
+	
+		
+//		
 //		if (works) {return true;}
 //		if (!works) {path.remove(nextPos);}
 		
@@ -149,7 +176,14 @@ public class OptimalSolver {
 //		
 //		return false;
 //	}
-	
+	boolean allEmpty(int[] pointsArray) {
+		boolean empty = true;
+		for (int a: pointsArray) {
+			if (a != 0) {empty = false;}
+		}
+		
+		return empty;
+	}
 	void printRes(ArrayList<Point> path, int level) { //prints in map based and coordinate based
 		if (!map.isCoordBased()) { //map based
 			char[][][] temp = this.map.getMaze().clone();
