@@ -44,7 +44,7 @@ public class OptimalSolver {
 			
 			
 			boolean res = solverHelper(pos, goal, l, history, path);
-//			System.out.println(res);
+			
 			if (!res) {System.out.println("The Wolverine Store is closed.");}
 			//For each "path" there will be a unique history list to ensure no backtracking
 		}
@@ -108,13 +108,13 @@ public class OptimalSolver {
 				Point p = new Point(x+x_c[i], y+y_c[i]);
 				if (this.map.inBounds(p)) {
 					if (this.map.getMaze()[p.x][p.y][level] == '.' && !history.contains(p)) { //if the tile is '.'
-						System.out.println(p + "Oop");
+//						System.out.println(p + "Oop");
 						history.add(p);
 						path.add(p);
 						boolean works = this.solverHelper(p, goal, level, history, path);
 						if (works) {return true;}
 						if (!works) { //if it doesn't work, remove the elements that stem to that result from the path
-							System.out.println("Removed");
+//							System.out.println("Removed: " + p);
 							path.remove(p);
 						}
 
@@ -124,11 +124,16 @@ public class OptimalSolver {
 			
 		}if (!allEmpty(points_c)) {//general case
 			Point nextPos = new Point(x+x_c[maxIndex], y+y_c[maxIndex]);
-			System.out.println(nextPos);
+//			System.out.println(nextPos);
 			history.add(nextPos);
 			path.add(nextPos);
 			boolean works = this.solverHelper(nextPos, goal, level, history, path);
 			if (works) {return true;}
+			if (!works) {
+				path.remove(nextPos);
+				boolean a = this.solverHelper(pos, goal, level, history, path);
+				if (a) {return true;}
+			}
 		}
 		
 		
@@ -138,10 +143,10 @@ public class OptimalSolver {
 	boolean allEmpty(int[] pointsArray) {
 		boolean empty = true;
 		for (int a: pointsArray) {
-			if (a != 0) {empty = false;}
+			if (a != 0) {return false;}
 		}
 		
-		return empty;
+		return true;
 	}
 	
 	void printRes(ArrayList<Point> path, int level) { //prints in map based and coordinate based

@@ -33,8 +33,9 @@ same datatype - 2D char array so that the searching algs don't need to change to
 16) Calculate runtime
 17) Add cmd line arguments
 
-//WHERE I AM NOW
+
 15) Begin on the optimal path approach
+//WHERE I AM NOW
 - Add the various cases of error handling 
  
 

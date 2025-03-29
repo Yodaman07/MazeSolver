@@ -21,7 +21,7 @@ public class p2 {
 			
 		}
 		
-		Map m = new Map("TEST12.txt", inCoord);
+		Map m = new Map("src/TEST14.txt", false);
 		m.load(); //MAKE SURE TO LOAD THE MAP BEFORE DOING ANYTHING WITH IT
 		
 		boolean choseSolver = false;
@@ -43,6 +43,8 @@ public class p2 {
 		}
 		
 		if (!choseSolver){
+			OptimalSolver os = new OptimalSolver(m, showTime, outCoord);
+			os.solve();
 			System.out.println("You need to chose one of the solver methods");
 			System.exit(0);
 		}

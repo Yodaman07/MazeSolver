@@ -14,7 +14,7 @@ class MapTester {
 		Map m = new Map("src/TEST01.txt", false);
 		m.load();
 		Queue<Point> q = new Queue<Point>();
-		QueueSolver qs = new QueueSolver(m);
+		QueueSolver qs = new QueueSolver(m, true, false);
 
 		
 		q.enqueue(new Point(1,2));
@@ -38,7 +38,7 @@ class MapTester {
 		Map m = new Map("src/TEST01.txt", false);
 		m.load();
 		Stack<Point> s = new Stack<Point>();
-		StackSolver ss = new StackSolver(m);
+		StackSolver ss = new StackSolver(m, true, false);
 
 		
 		s.push(new Point(1,2));
@@ -62,7 +62,7 @@ class MapTester {
 	void testQueueRemove() { //test the remove method from the Map Class
 		Map m = new Map("src/TEST01.txt", false);
 		m.load();
-		QueueSolver qs = new QueueSolver(m);
+		QueueSolver qs = new QueueSolver(m, true, false);
 		Queue<Point> q = new Queue<Point>();
 		q.enqueue(new Point(1,2));
 		q.enqueue(new Point(3,4));
@@ -102,7 +102,7 @@ class MapTester {
 	void testStackRemove() { //test the remove method from the Map Class
 		Map m = new Map("src/TEST01.txt", false);
 		m.load();
-		StackSolver ss = new StackSolver(m);
+		StackSolver ss = new StackSolver(m, true, false);
 		Stack<Point> s = new Stack<Point>();
 		s.push(new Point(1,2));
 		s.push(new Point(3,4));
