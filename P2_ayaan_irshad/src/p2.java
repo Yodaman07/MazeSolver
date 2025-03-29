@@ -4,7 +4,7 @@ import java.util.Stack;
 import DataStructures.Queue;
 
 public class p2 {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IllegalCommandLineInputsException {
 		// TODO Auto-generated method stub
 		
 		boolean showTime = false;
@@ -21,8 +21,13 @@ public class p2 {
 			
 		}
 		
-		Map m = new Map("src/TEST14.txt", false);
-		m.load(); //MAKE SURE TO LOAD THE MAP BEFORE DOING ANYTHING WITH IT
+		Map m = new Map("TEST01.txt", inCoord);
+		//MAKE SURE TO LOAD THE MAP BEFORE DOING ANYTHING WITH IT
+		try {
+			m.load();
+		} catch (IncorrectMapFormatException e) {e.printStackTrace();
+		} catch (IncompleteMapException e) {e.printStackTrace();
+		}catch (IllegalMapCharacterException e) {e.printStackTrace();}
 		
 		boolean choseSolver = false;
 		for (String arg: args) {
@@ -45,12 +50,22 @@ public class p2 {
 		if (!choseSolver){
 			OptimalSolver os = new OptimalSolver(m, showTime, outCoord);
 			os.solve();
-			System.out.println("You need to chose one of the solver methods");
-			System.exit(0);
+			throw new IllegalCommandLineInputsException("You need to chose one of the solver methods");
 		}
 		
 
 	}
-
+	
 
 }
+
+
+class IllegalCommandLineInputsException extends Exception
+{
+      // Constructor that accepts a message
+      public IllegalCommandLineInputsException(String message)
+      {
+         super(message);
+      }
+ }
+

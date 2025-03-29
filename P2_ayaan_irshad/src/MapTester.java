@@ -10,7 +10,7 @@ import DataStructures.Stack;
 class MapTester {
 
 	@Test
-	void testQueueContains() { //test the contains method in the Map Class 
+	void testQueueContains() throws IncorrectMapFormatException, IncompleteMapException, IllegalMapCharacterException { //test the contains method in the Map Class 
 		Map m = new Map("src/TEST01.txt", false);
 		m.load();
 		Queue<Point> q = new Queue<Point>();
@@ -34,7 +34,7 @@ class MapTester {
 	}
 	
 	@Test
-	void testStackContains() {
+	void testStackContains() throws IncorrectMapFormatException, IncompleteMapException, IllegalMapCharacterException {
 		Map m = new Map("src/TEST01.txt", false);
 		m.load();
 		Stack<Point> s = new Stack<Point>();
@@ -59,7 +59,7 @@ class MapTester {
 	
 	
 	@Test
-	void testQueueRemove() { //test the remove method from the Map Class
+	void testQueueRemove() throws IncorrectMapFormatException, IncompleteMapException, IllegalMapCharacterException { //test the remove method from the Map Class
 		Map m = new Map("src/TEST01.txt", false);
 		m.load();
 		QueueSolver qs = new QueueSolver(m, true, false);
@@ -99,7 +99,7 @@ class MapTester {
 	
 	
 	@Test
-	void testStackRemove() { //test the remove method from the Map Class
+	void testStackRemove() throws IncorrectMapFormatException, IncompleteMapException, IllegalMapCharacterException { //test the remove method from the Map Class
 		Map m = new Map("src/TEST01.txt", false);
 		m.load();
 		StackSolver ss = new StackSolver(m, true, false);
@@ -138,7 +138,7 @@ class MapTester {
 	}
 	
 	@Test
-	void testInBounds() {
+	void testInBounds() throws IncorrectMapFormatException, IncompleteMapException, IllegalMapCharacterException {
 		Map m = new Map("src/TEST05.txt", false);
 		m.load();
 		

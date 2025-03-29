@@ -22,29 +22,37 @@ public class Map {
 	}
 	
 	
-	public void load() {
+	public void load() throws IncorrectMapFormatException, IncompleteMapException, IllegalMapCharacterException {
 		try {
 			File f = new File(this.path);
 			Scanner s = new Scanner(f);
 			
 			String[] data = s.nextLine().split(" ");
-			
-			this.rows = Integer.valueOf(data[0]);
-			this.cols = Integer.valueOf(data[1]);
-			this.levels = Integer.valueOf(data[2]);
-			this.maze = new char[this.rows][this.cols][this.levels];
+			try {
+				this.rows = Integer.valueOf(data[0]);
+				this.cols = Integer.valueOf(data[1]);
+				this.levels = Integer.valueOf(data[2]);
+				this.maze = new char[this.rows][this.cols][this.levels];
+			}catch(Exception e) {
+				throw new IncorrectMapFormatException("The first line must contain 3 positive numbers");
+			}
 //			System.out.println(rows + ":" + cols + ":" + levels);
 			
 			if (!coordBased) { //loading regular map based mazes
-				for (int l = 0; l < levels; l++) {
-					int r = 0;
-					while (s.hasNextLine() && r < this.rows) {
-						String line = s.nextLine(); 
-						for (int i = 0; i < this.cols; i++) {
-							this.maze[r][i][l] = line.charAt(i);
+				try {
+					for (int l = 0; l < levels; l++) {
+						int r = 0;
+						while (s.hasNextLine() && r < this.rows) {
+							String line = s.nextLine(); 
+							for (int i = 0; i < this.cols; i++) {
+								if (!validChar(line.charAt(i))) {throw new IllegalMapCharacterException("Your map includes an illegal character. You can only use:.@$W|");}
+								this.maze[r][i][l] = line.charAt(i);
+							}
+							r++;
 						}
-						r++;
 					}
+				}catch(Exception e) {
+					throw new IncompleteMapException("You do not have as many columns/rows as the first line said you have. The first line format is rowNum, columnNum, levelNum");
 				}
 				this.printMaze();
 			}else { //loading coordinate based mazes
@@ -53,6 +61,8 @@ public class Map {
 					int row = s.nextInt();
 					int col = s.nextInt();
 					int lvl = s.nextInt();
+					if (!validChar(elmn)) {throw new IllegalMapCharacterException("Your map includes an illegal character. You can only use:.@$W|");}
+					if (!inBounds(new Point(row, col))) {throw new IncompleteMapException("Your coordinates don't fit in the map bound");}
 					System.out.println(elmn + " " + row + " " + col + " " + lvl);
 					this.maze[row][col][lvl] = elmn;
 				}
@@ -103,4 +113,46 @@ public class Map {
 	public int getCols() { return cols; }
 	public int getLevels() { return levels; }
 	
+	public boolean validChar(char c) {
+		char[] valid = {'.','$','W','@','|'};
+		for (char a: valid) {
+			if (c == a) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 }
+
+
+class IllegalMapCharacterException extends Exception
+{
+      // Constructor that accepts a message
+      public IllegalMapCharacterException(String message)
+      {
+         super(message);
+      }
+ }
+
+
+
+class IncompleteMapException extends Exception
+{
+      // Constructor that accepts a message
+      public IncompleteMapException(String message)
+      {
+         super(message);
+      }
+ }
+
+class IncorrectMapFormatException extends Exception
+{
+      // Constructor that accepts a message
+      public IncorrectMapFormatException(String message)
+      {
+         super(message);
+      }
+ }
+

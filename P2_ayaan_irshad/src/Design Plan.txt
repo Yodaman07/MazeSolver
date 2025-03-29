@@ -35,9 +35,9 @@ same datatype - 2D char array so that the searching algs don't need to change to
 
 
 15) Begin on the optimal path approach
-//WHERE I AM NOW
 - Add the various cases of error handling 
- 
+//WHERE I AM NOW 
+I FINISHED!!!!
 
 
 Remember this plan can change
